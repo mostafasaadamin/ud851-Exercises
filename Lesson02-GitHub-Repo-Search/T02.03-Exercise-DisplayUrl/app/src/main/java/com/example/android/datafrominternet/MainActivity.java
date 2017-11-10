@@ -51,15 +51,18 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
+public void makeGithubSearchQuery()
+{
+String url=mSearchBoxEditText.getText.toString();
+URL  githupsearchquery=NetworkUtils.buildUrl(url);
+    mUrlDisplayTextView.setText(githupsearchquery.toString());
+}
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemThatWasClickedId = item.getItemId();
         if (itemThatWasClickedId == R.id.action_search) {
             // TODO (4) Remove the Toast message when the search menu item is clicked
-            Context context = MainActivity.this;
-            String textToShow = "Search clicked";
-            Toast.makeText(context, textToShow, Toast.LENGTH_SHORT).show();
+            makeGithubSearchQuery();
             // TODO (5) Call makeGithubSearchQuery when the search menu item is clicked
             return true;
         }
