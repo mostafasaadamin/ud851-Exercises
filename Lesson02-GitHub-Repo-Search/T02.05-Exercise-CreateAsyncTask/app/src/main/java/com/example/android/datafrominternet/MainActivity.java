@@ -57,12 +57,7 @@ public class MainActivity extends AppCompatActivity {
         URL githubSearchUrl = NetworkUtils.buildUrl(githubQuery);
         mUrlDisplayTextView.setText(githubSearchUrl.toString());
         String githubSearchResults = null;
-        try {
-            githubSearchResults = NetworkUtils.getResponseFromHttpUrl(githubSearchUrl);
-            mSearchResultsTextView.setText(githubSearchResults);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+      new GithubQueryTask().excute(githubSearchUrl);
         // TODO (4) Create a new GithubQueryTask and call its execute method, passing in the url to query
     }
 
@@ -70,6 +65,33 @@ public class MainActivity extends AppCompatActivity {
     // TODO (2) Override the doInBackground method to perform the query. Return the results. (Hint: You've already written the code to perform the query)
     // TODO (3) Override onPostExecute to display the results in the TextView
 
+     public class GithubQueryTask extends AsyncTask<URL, Void,String>
+    {
+
+        @Override
+        protected String doInBackground(URL... urls) {
+            URL search=urls[0];
+            String searchresult=null;
+            try
+            {
+                searchresult= NetworkUtils.getResponseFromHttpUrl(search);
+            }catch(IOException ex)
+            {
+            ex.printStackTrace();
+            }
+            return searchresult;
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if(s!=null&&!s.equals(""))
+            {
+              mSearchResultsTextView.setText(s);
+            }
+
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
